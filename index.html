@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font: normal 16px sans-serif;
+      padding: 8px;
+      line-height: 1.4em;
+    }
+
+    code {
+      background: #eee;
+      padding: 2px;
+      border-radius: 2px;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .artboard {
+      display: layout(self-directed);
+      height: 200px;
+      border: 1px solid #242424;
+      margin: 8px 0;
+      --layout: grid;
+      --grid-columns: 1s 2s 1s;
+      --grid-space-horizontal: 16 8 16;
+    }
+
+    .box-1 {
+      display: layout(parent-directed);
+      background: #000;
+      height: 100px;
+      color: white;
+      --grid: 1 1;
+    }
+
+    .box-2 {
+      display: layout(parent-directed);
+      background: red;
+      height: 100px;
+      color: white;
+      --grid: 3 1;
+    }
+
+    .box-3 {
+      display: layout(parent-directed);
+      background: green;
+      height: 100px;
+      color: white;
+      --grid: 2 1;
+      --layout: horizontal;
+      --main-left: 1s;
+      --main-right: 1s;
+      --main-between: 8;
+    }
+
+    .box-31 {
+      display: layout(parent-directed);
+      width: 60px;
+      height: 60px;
+      background: yellow;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>
+    <a href="https://github.com/lynaghk/subform-layout">Subform’s Layout engine</a> via
+    <a href="https://drafts.css-houdini.org/css-layout-api/">CSS Layout API</a>
+  </h1>
+  <div class="artboard">
+    <div class="box-1"></div>
+    <div class="box-2"></div>
+    <div class="box-3">
+      <div class="box-31"></div>
+      <div class="box-31"></div>
+      <div class="box-31"></div>
+    </div>
+  </div>
+
+  <p>
+    <a href="layout.js">Layout Worklet Source</a>
+  </p>
+
+  <p>
+    <h2>Positioning</h2>
+    <ul>
+      <li>
+        <code>display: layout(self-directed)</code>
+        <small>(kinda code absolute)</small>
+      </li>
+      <li>
+        <code>display: layout(parent-directed)</code>
+        <small>(kinda relative)</small>
+      </li>
+    </ul>
+
+    <h2>Spacing</h2>
+    <ul>
+      <li>
+        <code>--main-right</code> before first child element
+      </li>
+      <li>
+        <code>--main-left</code> after last child element
+      </li>
+      <li>
+        <code>--main-between</code> between child elements
+      </li>
+      <li>
+        <code>...</code>
+      </li>
+    </ul>
+
+    <h2>Units</h2>
+    <ul>
+      <li>
+        <code>space</code> (
+        <code>1s</code>) a part of the available space of the parent element
+        <small>(kinda flex)</small>
+      </li>
+      <li>
+        <code>number</code> amount in pixels
+      </li>
+    </ul>
+  </p>
+
+  <script>
+    if ('layoutWorklet' in CSS) {
+      CSS.layoutWorklet.addModule('layout.js');
+    } else {
+      alert(`Your browser doesn't support CSS Layout API.
+Get Chrome 67`);
+    }
+  </script>
+
+</body>
+
+</html>
