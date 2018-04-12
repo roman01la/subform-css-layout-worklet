@@ -1,66 +1,16 @@
-const H_BEFORE = "--space-horizontal-before";
-const H_AFTER = "--space-horizontal-after";
-const V_BEFORE = "--space-vertical-before";
-const V_AFTER = "--space-vertical-after";
+import { parseValue, parseValues } from "./utils";
+import {
+  LAYOUT,
+  GRID,
+  GRID_COLUMNS,
+  GRID_ROWS,
+  GRID_SPACE,
+  MAIN_RIGHT,
+  MAIN_LEFT,
+  MAIN_BETWEEN
+} from "./cssProps";
 
-const CROSS_LEFT = "--cross-left";
-const CROSS_RIGHT = "--cross-right";
-
-const MAIN_RIGHT = "--main-right";
-const MAIN_LEFT = "--main-left";
-const MAIN_BETWEEN = "--main-between";
-
-const LAYOUT = "--layout";
-
-const GRID = "--grid";
-const GRID_COLUMNS = "--grid-columns";
-const GRID_ROWS = "--grid-rows";
-const GRID_SPACE = "--grid-space-horizontal";
-
-const spaceValue = /^(\d)s$/;
-
-const _parseValue = value => {
-  if (spaceValue.test(value)) {
-    return { space: parseInt(value.match(spaceValue)[1]) };
-  } else if (Number.isNaN(parseInt(value)) !== true) {
-    return { px: parseInt(value) };
-  } else {
-    throw new Error(
-      `Wrong value "${value}" passed into ${prop} layout property`
-    );
-  }
-};
-
-const parseValue = (prop, m) => {
-  if (m.get(prop).length !== 0) {
-    const value = m.get(prop)[0].trim();
-    return _parseValue(value);
-  }
-};
-
-const parseValues = (prop, m) => {
-  if (m.get(prop).length !== 0) {
-    const values = m
-      .get(prop)[0]
-      .trim()
-      .split(/ +/)
-      .map(v => _parseValue(v));
-
-    return values;
-  }
-};
-
-class ParentDirectedLayout {
-  static get inputProperties() {
-    return [H_BEFORE, H_AFTER, V_BEFORE, V_AFTER];
-  }
-
-  *intrinsicSizes() {}
-
-  *layout(children, edges, constraints, styleMap) {}
-}
-
-class SelfDirectedLayout {
+export class SelfDirectedLayout {
   static get inputProperties() {
     return [
       LAYOUT,
@@ -186,23 +136,6 @@ class SelfDirectedLayout {
   }
 }
 
-class ArtboardLayout {
-  static get inputProperties() {
-    return [CROSS_LEFT, CROSS_RIGHT];
-  }
+const register = () => registerLayout("self-directed", SelfDirectedLayout);
 
-  *intrinsicSizes() {}
-
-  *layout(children, edges, constraints, styleMap) {
-    const fixedInlineSize = constraints.fixedInlineSize;
-
-    const childFragments = yield children.map(child => {
-      return child.layoutNextFragment({});
-    });
-    return { childFragments };
-  }
-}
-
-registerLayout("self-directed", SelfDirectedLayout);
-registerLayout("parent-directed", SelfDirectedLayout);
-registerLayout("artboard", ArtboardLayout);
+export default register;

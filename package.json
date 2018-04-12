@@ -1,0 +1,24 @@
+{
+  "name": "subform-css-layout-worklet",
+  "version": "1.0.0",
+  "description": "Subform’s Layout engine via CSS Layout API ",
+  "main": "src/index.js",
+  "scripts": {
+    "umd":
+      "rollup src/index.js --o dist/subform-css-layout-worklet.umd.js --f umd --name 'SubformLayoutWorklet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roman01la/subform-css-layout-worklet.git"
+  },
+  "keywords": ["worklet", "css layout api"],
+  "author": "Roman Liutikov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roman01la/subform-css-layout-worklet/issues"
+  },
+  "homepage": "https://github.com/roman01la/subform-css-layout-worklet#readme",
+  "devDependencies": {
+    "rollup": "^0.57.1"
+  }
+}
