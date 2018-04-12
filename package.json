@@ -2,7 +2,7 @@
   "name": "subform-css-layout-worklet",
   "version": "1.0.0",
   "description": "Subform’s Layout engine via CSS Layout API ",
-  "main": "src/index.js",
+  "main": "dist/subform-css-layout-worklet.umd.js",
   "scripts": {
     "umd":
       "rollup src/index.js --o dist/subform-css-layout-worklet.umd.js --f umd --name 'SubformLayoutWorklet'"
